@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer base {
+  body {
+    @apply bg-darker text-gray-200;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 text-gray-300 hover:text-primary transition-colors duration-300;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-2 bg-primary hover:bg-secondary text-white rounded-lg transition-all duration-300 hover:scale-105;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-heading font-bold mb-6 animate-glow;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+} 

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Personal Website</title>
+    <meta name="description" content="Personal website showcasing my work, hobbies, and creative endeavors">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link href="css/output.css" rel="stylesheet">
+    
+    <!-- Project Styles -->
+    <link href="css/projects.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        body.fade-in {
+            opacity: 1;
+        }
+        
+        .bg-dark {
+            background-color: rgba(13, 17, 23, 0.8);
+        }
+        
+        .animate-glow {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(52, 152, 219, 0.5),
+                           0 0 20px rgba(155, 89, 182, 0.3),
+                           0 0 30px rgba(0, 168, 255, 0.2);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(52, 152, 219, 0.6),
+                           0 0 30px rgba(155, 89, 182, 0.4),
+                           0 0 40px rgba(0, 168, 255, 0.3);
+            }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(45deg, #3498db, #9b59b6, #00a8ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient 8s linear infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.2);
+        }
+        
+        .bg-darker {
+            background-color: transparent;
+        }
+        
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .video-card {
+            width: 300px;
+            transition: all 0.3s ease;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(52, 152, 219, 0.4);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.1);
+        }
+        
+        .video-preview {
+            backdrop-filter: blur(8px);
+        }
+        
+        #videoPreviewContent iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Add keyboard support for closing modal */
+        .video-preview:focus {
+            outline: none;
+        }
+
+        @keyframes wag {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes blink {
+            0%, 95%, 100% { transform: scaleY(1); }
+            97% { transform: scaleY(0.1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .puppy-tail {
+            transform-origin: 80px 40px;
+            animation: wag 1s infinite;
+        }
+
+        .puppy-eye {
+            animation: blink 4s infinite;
+        }
+
+        .puppy-ears {
+            animation: bounce 2s infinite;
+        }
+
+        #videoPreview {
+            animation: modalFade 0.3s ease-out;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .filter-btn {
+            @apply px-4 py-2 rounded-full text-gray-300 hover:text-primary transition-colors duration-300;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .filter-btn.active {
+            @apply bg-primary text-white;
+        }
+
+        .project-card {
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #3498db, transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item.left {
+            margin-right: auto;
+            text-align: right;
+        }
+
+        .timeline-item.right {
+            margin-left: auto;
+            text-align: left;
+        }
+
+        .timeline-content {
+            position: relative;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-dot {
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+        }
+
+        /* Custom Cursor Styles */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: rgba(52, 152, 219, 0.5);
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        .custom-cursor.active {
+            transform: scale(1.5);
+            background: rgba(52, 152, 219, 0.3);
+        }
+
+        /* Magnetic Button Effect */
+        .magnetic-button {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        /* Animated Navigation */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            transform: translateX(0);
+        }
+
+        /* Theme Switcher Animation */
+        .theme-switch {
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .theme-switch:hover {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 2rem;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 4rem;
+                text-align: left;
+            }
+
+            .timeline-item.left {
+                text-align: left;
+            }
+
+            .timeline-dot {
+                left: 2rem !important;
+                right: auto !important;
+            }
+
+            .video-card {
+                width: 280px;
+            }
+            
+            .video-scroller {
+                padding: 1rem 0;
+            }
+            
+            #videoPreviewContent {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+        }
+
+        .nav-link.active {
+            color: #3498db;
+            position: relative;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            transform: scaleX(1);
+        }
+        
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-dark/80 backdrop-blur-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="home.html" class="text-2xl font-heading font-bold text-primary">Ashish</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-4">
+                        <a href="home.html" class="nav-link active">Home</a>
+                        <a href="about.html" class="nav-link">About</a>
+                        <a href="hobbies.html" class="nav-link">Hobbies</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                        <button id="theme-toggle" class="nav-link">🌙</button>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="home.html" class="nav-link block active">Home</a>
+                    <a href="about.html" class="nav-link block">About</a>
+                    <a href="hobbies.html" class="nav-link block">Hobbies</a>
+                    <a href="contact.html" class="nav-link block">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6 animate-glow">
+                Hi, I'm <span class="text-gradient">Ashish Kumar Laheri</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                Welcome to my creative corner of the internet
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="about.html" class="btn-primary">About Me</a>
+                <a href="contact.html" class="btn-primary">Get in Touch</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Interactive Timeline -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-12">My Journey</h2>
+            <div class="timeline-container">
+                <!-- Timeline items will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Puppy Mascot Section -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex justify-end">
+            <div class="relative">
+                <!-- Speech Bubble -->
+                <div class="absolute bottom-full mb-2 right-0 transform -translate-x-8">
+                    <div class="bg-white rounded-2xl p-4 relative shadow-lg">
+                        <p class="text-gray-800 text-lg font-medium whitespace-nowrap">Want to see what my master is doing on YouTube? 🎥</p>
+                        <!-- Triangle for speech bubble -->
+                        <div class="absolute -bottom-4 right-12 w-8 h-8 bg-white transform rotate-45"></div>
+                    </div>
+                </div>
+
+                <!-- Puppy SVG -->
+                <div class="w-32 h-32 transform hover:-translate-y-2 transition-transform duration-300">
+                    <svg viewBox="0 0 100 100" class="w-full h-full filter drop-shadow-lg">
+                        <!-- Body -->
+                        <ellipse cx="50" cy="55" rx="30" ry="25" fill="#9b59b6"/>
+                        <!-- Head -->
+                        <circle cx="50" cy="35" r="20" fill="#9b59b6"/>
+                        <!-- Eyes -->
+                        <g class="puppy-eye">
+                            <circle cx="43" cy="30" r="3" fill="white"/>
+                            <circle cx="57" cy="30" r="3" fill="white"/>
+                            <circle cx="43" cy="30" r="1.5" fill="black"/>
+                            <circle cx="57" cy="30" r="1.5" fill="black"/>
+                        </g>
+                        <!-- Nose -->
+                        <ellipse cx="50" cy="35" rx="4" ry="3" fill="#6c3483"/>
+                        <!-- Mouth -->
+                        <path d="M46 38 Q50 42 54 38" stroke="#6c3483" fill="none" stroke-width="2"/>
+                        <!-- Ears -->
+                        <g class="puppy-ears">
+                            <path d="M35 25 Q40 15 45 25" fill="#9b59b6"/>
+                            <path d="M65 25 Q60 15 55 25" fill="#9b59b6"/>
+                        </g>
+                        <!-- Tail -->
+                        <path class="puppy-tail" d="M75 55 Q85 45 80 40" stroke="#9b59b6" fill="none" stroke-width="6"/>
+                        <!-- Collar -->
+                        <path d="M35 45 Q50 55 65 45" stroke="#3498db" fill="none" stroke-width="3"/>
+                        <circle cx="50" cy="48" r="2" fill="#e74c3c"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Videos Section -->
+    <section class="py-16 bg-gradient-to-b from-dark/50 to-dark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="text-gradient animate-glow">Latest YouTube Videos</span>
+            </h2>
+            
+            <!-- Video Scroller -->
+            <div class="relative">
+                <!-- Left Arrow -->
+                <button class="scroll-left absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 bg-dark/80 p-3 rounded-full hover:bg-primary/80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary hover:scale-110 hidden md:block">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                
+                <!-- Video Container -->
+                <div class="video-scroller overflow-x-auto hide-scrollbar py-4 px-4">
+                    <div class="flex gap-6" id="videoContainer">
+                        <!-- Video items will be added here via JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Right Arrow -->
+                <button class="scroll-right absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 bg-dark/80 p-3 rounded-full hover:bg-primary/80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary hover:scale-110 hidden md:block">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Preview Modal -->
+    <div id="videoPreview" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative w-full h-full flex items-center justify-center p-4">
+            <!-- Close Button -->
+            <button onclick="closeVideoPreview()" class="absolute top-4 right-4 z-50 bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 text-white p-3 rounded-full transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <!-- Video Container -->
+            <div class="w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-primary/20">
+                <div id="videoPreviewContent" class="w-full h-full">
+                    <!-- Video iframe will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Projects Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-12">Latest Projects</h2>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-category="all">All Projects</button>
+                <button class="filter-btn" data-category="ai">AI Projects</button>
+                <button class="filter-btn" data-category="cloud">Cloud Projects</button>
+                <button class="filter-btn" data-category="docker">Docker Projects</button>
+                <button class="filter-btn" data-category="web">Web Projects</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- AI Project -->
+                <a href="https://github.com/ashishlaheri/jarvis-Meta" target="_blank" class="project-card" data-category="ai">
+                    <div class="bg-dark rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop&q=60" alt="Jarvis Meta" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Jarvis Meta</h3>
+                            <p class="text-gray-400 mb-4">An AI-powered personal assistant built with Python and Meta's AI technologies.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary hover:text-secondary transition-colors">
+                                    <i class="fab fa-github"></i> View Project
+                                </span>
+                                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">AI</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Cloud Project -->
+                <a href="https://github.com/ashishlaheri/invo-sharing" target="_blank" class="project-card" data-category="cloud">
+                    <div class="bg-dark rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=60" alt="Invo Sharing" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Invo Sharing</h3>
+                            <p class="text-gray-400 mb-4">A cloud-based file sharing platform with secure access controls.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary hover:text-secondary transition-colors">
+                                    <i class="fab fa-github"></i> View Project
+                                </span>
+                                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Docker Project -->
+                <a href="https://github.com/ashishlaheri/docker-compose-app" target="_blank" class="project-card" data-category="docker">
+                    <div class="bg-dark rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1624953587687-daf255b6b80a?w=800&auto=format&fit=crop&q=60" alt="Docker Compose App" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Docker Compose App</h3>
+                            <p class="text-gray-400 mb-4">A containerized application showcasing Docker and Docker Compose best practices.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary hover:text-secondary transition-colors">
+                                    <i class="fab fa-github"></i> View Project
+                                </span>
+                                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Web Projects -->
+                <a href="https://github.com/ashishlaheri/impress-ur-crush" target="_blank" class="project-card" data-category="web">
+                    <div class="bg-dark rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60" alt="Impress Your Crush" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Impress Your Crush</h3>
+                            <p class="text-gray-400 mb-4">A creative web application to help you make a lasting impression.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary hover:text-secondary transition-colors">
+                                    <i class="fab fa-github"></i> View Project
+                                </span>
+                                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Web</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/ashishlaheri/advice-genrator" target="_blank" class="project-card" data-category="web">
+                    <div class="bg-dark rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800&auto=format&fit=crop&q=60" alt="Advice Generator" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Advice Generator</h3>
+                            <p class="text-gray-400 mb-4">A web application that generates personalized advice using modern web technologies.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary hover:text-secondary transition-colors">
+                                    <i class="fab fa-github"></i> View Project
+                                </span>
+                                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Web</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Coding Terminal -->
+    <section class="py-20 bg-dark/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-12">Live Coding</h2>
+            <div class="terminal-container bg-black/90 rounded-lg p-4 shadow-2xl">
+                <div class="terminal-header flex items-center gap-2 mb-4">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="text-gray-400 ml-2">ashish@portfolio ~</span>
+                </div>
+                <div id="terminal" class="font-mono text-green-400 h-[400px] overflow-y-auto">
+                    <div class="typing-text"></div>
+                    <div class="cursor"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center">
+                <div class="flex space-x-6 mb-6">
+                    <a href="https://github.com/ashishlaheri" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ashish-kumar-laheri/" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://instagram.com/laheriashish" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://twitter.com/LaherAshish" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500">&copy; 2024 Your Name. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="js/globe.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/youtube.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/cursor.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Add keyboard support for closing the video preview
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideoPreview();
+            }
+        });
+
+        // Add fade-in class when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('fade-in');
+        });
+
+        // Add fade-out effect before page unload
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' && e.target.href && e.target.href.startsWith(window.location.origin)) {
+                e.preventDefault();
+                document.body.style.opacity = '0';
+                setTimeout(function() {
+                    window.location = e.target.href;
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html> 
